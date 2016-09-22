@@ -6,10 +6,12 @@ class HuffmanEncoder(object):
     """
 
     def encode(self, text):
+        """Encoding source text into binary sequence."""
         coding_table = self.get_coding_table(text)
         return ''.join(coding_table[char] for char in text)
 
     def get_coding_table(self, text):
+        """Returns dictionary {'character': binary code}."""
         counts_table = self.get_counts_table(text)
         coding_table = {char: '' for char in counts_table}
 
@@ -31,7 +33,7 @@ class HuffmanEncoder(object):
         return coding_table
 
     def get_counts_table(self, text):
-        """Returns dictionary with pairs 'character': number of it in text."""
+        """Returns dictionary {'character': number of it in text}."""
         counts_table = {}
         for char in text:
             counts_table[char] = counts_table.get(char, 0) + 1

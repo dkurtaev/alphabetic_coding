@@ -25,3 +25,6 @@ class TestHuffmanEncoder(unittest.TestCase):
             for j in range(i + 1, len(codes)):
                 self.assertFalse(codes[i].startswith(codes[j]))
                 self.assertFalse(codes[j].startswith(codes[i]))
+
+if __name__ == '__main__':
+    unittest.main()

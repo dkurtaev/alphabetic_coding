@@ -6,7 +6,7 @@ class BST(object):
     def __init__(self):
         self.root = None
 
-    def add_node(self, key, content):
+    def add_node(self, key, content=None):
         if self.root is None:
             self.root = BSTNode(key, content)
             return
@@ -28,16 +28,17 @@ class BST(object):
 
     def pop_min_key_node(self):
         """Find and delete node with minimal key"""
-        node = self.root
-        parent = self.root
-        while node.left is not None:
-            parent = node
-            node = node.left
-        if node is not self.root:
-            parent.left = node.right
-        else:
-            self.root = self.root.right
-        return node
+        if self.root is not None:
+            node = self.root
+            parent = self.root
+            while node.left is not None:
+                parent = node
+                node = node.left
+            if node is not self.root:
+                parent.left = node.right
+            else:
+                self.root = self.root.right
+            return node
 
     def print_tree(self):
         self.root.print_node()

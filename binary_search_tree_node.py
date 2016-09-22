@@ -2,7 +2,7 @@ import sys
 
 class BSTNode(object):
 
-    def __init__(self, key, content):
+    def __init__(self, key, content=None):
         self.key = key
         self.content = content
         self.left = None
