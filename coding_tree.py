@@ -1,4 +1,10 @@
-from coding_tree_node import CodingTreeNode
+class CodingTreeNode(object):
+
+    def __init__(self, content=None):
+        self.content = content
+        self.left = None
+        self.right = None
+
 
 class CodingTree(object):
 

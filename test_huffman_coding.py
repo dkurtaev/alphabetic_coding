@@ -1,9 +1,9 @@
 import unittest
 
-from huffman_encoder import HuffmanEncoder
+from huffman_coding import HuffmanEncoder, HuffmanDecoder
 
 
-class TestHuffmanEncoder(unittest.TestCase):
+class TestHuffmanCoding(unittest.TestCase):
 
     def test_all_chars_used(self):
         text = 'my little string'
