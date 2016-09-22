@@ -3,13 +3,17 @@ class HuffmanEncoder(object):
     characters in source text: more frequent characters has more shorter code.
     """
 
-    def encode(self, str):
-        counts_table = self.get_counts(str)
+    def encode(self, text):
+        coding_table = self.get_coding_table(text)
+        return ''.join(coding_table[char] for char in text)
 
-        tree = [[count, [char]] for char, count in counts_table.iteritems()]
+    def get_coding_table(self, text):
+        counts_table = self.get_counts_table(text)
+        coding_table = {}
         for char in counts_table:
-            counts_table[char] = ''
+            coding_table[char] = ''
 
+        tree = [[count, [char]] for char, count in coding_table.iteritems()]
         while len(tree) > 1:
             tree.sort(key=lambda node: node[0])
             nodes = tree[0:2]
@@ -17,14 +21,14 @@ class HuffmanEncoder(object):
 
             for i, node in enumerate(nodes):
                 for char in node[1]:
-                    counts_table[char] = '%d%s' % (i, counts_table[char])
+                    coding_table[char] = '%d%s' % (i, coding_table[char])
 
             tree.append([nodes[0][0] + nodes[1][0],
                          nodes[0][1] + nodes[1][1]])
 
-        return counts_table
+        return coding_table
 
-    def get_counts(self, text):
+    def get_counts_table(self, text):
         """Returns dictionary with pairs 'character': number of it in text."""
         counts_table = {}
         for char in text:
