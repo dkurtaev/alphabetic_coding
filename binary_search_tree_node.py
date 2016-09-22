@@ -1,5 +1,3 @@
-import sys
-
 class BSTNode(object):
 
     def __init__(self, key, content=None):
