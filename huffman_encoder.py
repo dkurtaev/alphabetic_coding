@@ -1,5 +1,7 @@
+from binary_search_tree import BST
+
 class HuffmanEncoder(object):
-    """ Hufman encoding - method gives optimal prefix coding using frequence of
+    """ Huffman encoding - method gives optimal prefix coding using frequence of
     characters in source text: more frequent characters has more shorter code.
     """
 
@@ -9,22 +11,22 @@ class HuffmanEncoder(object):
 
     def get_coding_table(self, text):
         counts_table = self.get_counts_table(text)
-        coding_table = {}
-        for char in counts_table:
-            coding_table[char] = ''
+        coding_table = {char: '' for char in counts_table}
 
-        tree = [[count, [char]] for char, count in coding_table.iteritems()]
-        while len(tree) > 1:
-            tree.sort(key=lambda node: node[0])
-            nodes = tree[0:2]
-            del tree[0:2]
+        tree = BST()
+        for char, count in counts_table.items():
+            tree.add_node(key=count, content=[char])
+
+        # Each iteration deletes one node.
+        for iteration in range(len(counts_table) - 1):
+            nodes = [tree.pop_min_key_node(), tree.pop_min_key_node()]
 
             for i, node in enumerate(nodes):
-                for char in node[1]:
+                for char in node.content:
                     coding_table[char] = '%d%s' % (i, coding_table[char])
 
-            tree.append([nodes[0][0] + nodes[1][0],
-                         nodes[0][1] + nodes[1][1]])
+            tree.add_node(key=nodes[0].key + nodes[1].key,
+                          content=nodes[0].content + nodes[1].content)
 
         return coding_table
 
