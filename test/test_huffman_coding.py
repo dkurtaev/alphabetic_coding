@@ -41,7 +41,7 @@ class TestHuffmanCoding(unittest.TestCase):
                     self.assertFalse(codes[i].startswith(codes[j]))
                     self.assertFalse(codes[j].startswith(codes[i]))
 
-    def test_decoder(self):
+    def test_decode_encoded(self):
         for gen in range(1000):
             text = self.gen_text()
             coding_table = HuffmanEncoder().get_coding_table(text)
