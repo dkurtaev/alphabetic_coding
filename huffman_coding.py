@@ -16,6 +16,11 @@ class HuffmanEncoder(object):
         counts_table = self.get_counts_table(text)
         coding_table = {char: '' for char in counts_table}
 
+        # Exceptional case.
+        if len(coding_table) == 1:
+            coding_table[coding_table.keys()[0]] = '0'
+            return coding_table
+
         tree = BST()
         for char, count in counts_table.items():
             tree.add_node(key=count, content=[char])
