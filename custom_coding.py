@@ -11,6 +11,8 @@ class Encoder(object):
         if debug:
             for code in coding_table.values():
                 assert re.search(r'^[01]+$', code) != None
+            for char in text:
+                assert char in coding_table
 
         return ''.join(coding_table[char] for char in text)
 
