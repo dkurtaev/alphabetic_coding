@@ -10,8 +10,8 @@ But be careful: it might be not bijective (more details later).
 ...   'b': '101',
 ...   'c': '11'
 ... }
->>> encoder = Encoder()
->>> encoder.encode('abcbabca', coding_table)
+>>> encoder = Encoder(coding_table)
+>>> encoder.encode('abcbabca')
 '0101011110101010111010'
 ```
 

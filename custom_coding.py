@@ -6,15 +6,20 @@ from coding_tree import CodingTree
 
 class Encoder(object):
 
-    def encode(self, text, coding_table, debug=True):
-        """Encode source text into binary sequence using custom coding table."""
+    def __init__(self, coding_table, debug=True):
+        self.coding_table = coding_table
         if debug:
             for code in coding_table.values():
-                assert re.search(r'^[01]+$', code) != None
-            for char in text:
-                assert char in coding_table
+                assert re.search(r'^[01]+$', code) != None, \
+                    'All codes must be binary'
 
-        return ''.join(coding_table[char] for char in text)
+    def encode(self, text, debug=True):
+        """Encode source text into binary sequence using custom coding table."""
+        if debug:
+            for char in text:
+                assert char in self.coding_table, \
+                    'All characters in text must be mapped to binary sequences'
+        return ''.join(self.coding_table[char] for char in text)
 
 
 class Decoder(object):
@@ -28,7 +33,7 @@ class Decoder(object):
         texts_queue = deque([''])
         for bit in sequence:
             n_nodes = len(nodes_queue)
-            for i in range(n_nodes):
+            for _ in range(n_nodes):
                 node = nodes_queue.popleft()
                 text = texts_queue.popleft()
 
