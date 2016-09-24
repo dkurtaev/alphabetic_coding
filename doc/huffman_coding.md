@@ -4,7 +4,6 @@ Method considers characters frequency: for most frequently used characters used
 binary sequences as shorter as possible (for prefix property).
 
 ## Encoding
-
 ```python
 >>> from huffman_coding import HuffmanEncoder
 >>> encoder = HuffmanEncoder()

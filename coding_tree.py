@@ -1,12 +1,19 @@
-class CodingTreeNode(object):
-
-    def __init__(self, content=None):
-        self.content = content
-        self.left = None
-        self.right = None
-
-
 class CodingTree(object):
+    """This class used for building coding tree - binary tree with data about
+    alphabetic coding. Each node - some binary sequence. Each left edge - '0'
+    bit appending, each right edge - '1' bit appending.
+             ( )
+           ___|___
+          |       |             sample coding table:
+        ( 0 )    ( )          {'a': 11, 'b': 0, 'c': 001, 'd': 101}
+       ___|    ___|___
+      |       |       |
+     ( )     ( )    ( 11 )
+      |___    |___
+          |       |
+       ( 001 ) ( 101 )
+
+    If node is not empty - we have some character whit corresponding code."""
 
     def __init__(self):
         self.root = CodingTreeNode()
@@ -24,3 +31,11 @@ class CodingTree(object):
                     node.right = CodingTreeNode()
                 node = node.right
         node.content = content
+
+
+class CodingTreeNode(object):
+
+    def __init__(self, content=None):
+        self.content = content
+        self.left = None
+        self.right = None

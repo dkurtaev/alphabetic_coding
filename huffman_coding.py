@@ -57,11 +57,11 @@ class HuffmanDecoder(object):
             coding_tree.add_node(code, char)
 
         text = ''
-        i = 0
-        while i < len(sequence):
-            node = coding_tree.root
-            while node.content == None:
-                node = node.left if sequence[i] == '0' else node.right
-                i += 1
-            text += node.content
+        node = coding_tree.root
+        for bit in sequence:
+            node = node.left if bit == '0' else node.right
+            if node.content is not None:
+                text += node.content
+                node = coding_tree.root
+
         return text
