@@ -1,6 +1,6 @@
 import unittest
 
-from code_generator import gen_lengths, max_num_characters, min_code_length, \
+from code_generator import gen_code, max_num_characters, min_code_length, \
                            max_code_length
 
 class TestCodeGenerator(unittest.TestCase):
@@ -13,12 +13,11 @@ class TestCodeGenerator(unittest.TestCase):
                 L_max = max_code_length(M, N)
                 for L in range(L_min, L_max + 1):
                     for _ in range(10):
-                        x = gen_lengths(M, N, L)
-                        self.assertEqual(len(x), M)
-                        self.assertEqual(sum(x), N)
-                        x = [x[i] * (i + 1) for i in range(0, M)]
-                        self.assertEqual(sum(x), L)
-
+                        code = gen_code(M, N, L)
+                        lengths = [len(c) for c in code]
+                        self.assertEqual(max(lengths), M)
+                        self.assertEqual(len(lengths), N)
+                        self.assertEqual(sum(lengths), L)
 
 if __name__ == '__main__':
     random.seed(324)

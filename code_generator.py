@@ -3,13 +3,27 @@ Generally, each set has next parameters:
     M - maxiamal length of binary sequences
     N - number of binary sequences
     L - sum of binary sequences lengths (called as code length)."""
+import random
+
 from math import log, ceil
-from random import randint
 from bisect import bisect
 
 def gen_code(M, N, L):
     """This function generates set of [N] binary sequences with maximal length
-    [M] and sum [L] of lengths"""
+    [M] and sum [L] of lengths."""
+    assert M >= 1
+    assert 2 <= N <= max_num_characters(M)
+    assert min_code_length(M, N) <= L <= max_code_length(M, N)
+
+    counts = gen_lengths(M, N, L)
+    code = []
+    for i, count in enumerate(counts):
+        if count > 0:
+            seeds = random.sample(xrange(pow(2, i + 1)), count)
+            for seed in seeds:
+                code.append(bin(seed)[2:].rjust(i + 1, '0'))
+
+    return code
 
 def gen_lengths(M, N, L):
     """This function returns solving of task:
@@ -18,6 +32,10 @@ def gen_lengths(M, N, L):
     0 <= x[i] <= pow(2, i), i = 1..M
     x[M] >= 1
     where x[i] interpreted as number of sequences with length i."""
+    assert M >= 1
+    assert 2 <= N <= max_num_characters(M)
+    assert min_code_length(M, N) <= L <= max_code_length(M, N)
+
     x = [0 for _ in range(M)]
     x[M - 1] = 1
 
@@ -27,7 +45,7 @@ def gen_lengths(M, N, L):
     # Generate random initial lenghts distribution.
     current_L = M
     for _ in range(1, N):
-        idx = randint(0, len(not_full_lenghts) - 1)
+        idx = random.randint(0, len(not_full_lenghts) - 1)
         length = not_full_lenghts[idx]
         x[length - 1] += 1
         if x[length - 1] == pow(2, length):
@@ -44,9 +62,9 @@ def gen_lengths(M, N, L):
             max_dec_len = not_full_lenghts[-1] - 1
 
         # Select decremented length.
-        dec_len = randint(min_dec_len, max_dec_len)
+        dec_len = random.randint(min_dec_len, max_dec_len)
         while x[dec_len - 1] == 0 or dec_len == M and x[M - 1] == 1:
-            dec_len = randint(min_dec_len, max_dec_len)
+            dec_len = random.randint(min_dec_len, max_dec_len)
 
         # Find decremented length position at list of not full lengths.
         # Insert if not exists.
@@ -58,9 +76,10 @@ def gen_lengths(M, N, L):
 
         # Select incremented length.
         if current_L > L:
-            inc_len_id = randint(0, dec_len_id - 1)
+            inc_len_id = random.randint(0, dec_len_id - 1)
         else:
-            inc_len_id = randint(dec_len_id + 1, len(not_full_lenghts) - 1)
+            inc_len_id = random.randint(dec_len_id + 1,
+                                        len(not_full_lenghts) - 1)
         inc_len = not_full_lenghts[inc_len_id]
 
         x[dec_len - 1] -= 1
