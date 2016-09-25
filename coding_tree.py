@@ -24,6 +24,7 @@ class CodingTree(object):
         """Adding node for binary sequence"""
         node = self.root
         for bit in sequence:
+            node.contents_below.append(content)
             if bit == '0':
                 if node.left is None:
                     node.left = CodingTreeNode()
@@ -82,20 +83,7 @@ class CodingTree(object):
             else:
                 return contents_above, []
 
-        contents_below = []
-        nodes = deque([node])
-        while len(nodes) > 0:
-            node = nodes.popleft()
-            if node.left is not None:
-                nodes.append(node.left)
-                if node.left.content is not None:
-                    contents_below.append(node.left.content)
-            if node.right is not None:
-                nodes.append(node.right)
-                if node.right.content is not None:
-                    contents_below.append(node.right.content)
-
-        return contents_above, contents_below
+        return contents_above, node.contents_below
 
 class CodingTreeNode(object):
 
@@ -103,3 +91,4 @@ class CodingTreeNode(object):
         self.content = content
         self.left = None
         self.right = None
+        self.contents_below = []
