@@ -1,6 +1,7 @@
 from test_coding import TestCoding
 from test_code_generator import gen_loop
 from bijection_checker import BijectionChecker
+from huffman_coding import HuffmanEncoder
 
 class TestBijectionChecker(TestCoding):
 
