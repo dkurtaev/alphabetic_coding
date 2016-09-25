@@ -1,3 +1,4 @@
+"""This module provides function for check coding bijection"""
 from collections import deque
 
 from coding_tree import CodingTree
@@ -31,9 +32,10 @@ def check_bijection(codes):
 
     return True, None, None
 
+
 class State(object):
 
-    def __init__(self, deficit, sign, upper_word=None, lower_word=None):
+    def __init__(self, deficit, sign, upper_word, lower_word):
         self.deficit = deficit
         self.sign = sign
         self.upper_word = upper_word

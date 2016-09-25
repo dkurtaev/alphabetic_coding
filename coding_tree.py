@@ -35,15 +35,6 @@ class CodingTree(object):
                 node = node.right
         node.content = content
 
-    def find_node(self, sequence):
-        """Returns node by sequence."""
-        node = self.root
-        for bit in sequence:
-            node = node.left if bit == '0' else node.right
-            if node is None:
-                break
-        return node
-
     def decompose(self, sequence):
         nodes_queue = deque([self.root])
         contens_queue = deque([[]])

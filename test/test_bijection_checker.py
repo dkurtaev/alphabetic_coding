@@ -2,6 +2,7 @@ from test_coding import TestCoding
 from test_code_generator import gen_loop
 from bijection_checker import check_bijection
 from huffman_coding import HuffmanEncoder
+from code_generator import gen_unbijective_coding
 
 class TestBijectionChecker(TestCoding):
 
@@ -42,3 +43,11 @@ class TestBijectionChecker(TestCoding):
                 self.assertEqual(''.join(first_word), ''.join(second_word))
 
         gen_loop(test)
+
+    def test_unbijective_codes(self):
+        """Generate guaranteed not bijective coding. Checker should recognize
+        them as not bijective."""
+        for _ in range(10000):
+            codes = gen_unbijective_coding()
+            is_bijective, _, _ = check_bijection(codes)
+            self.assertFalse(is_bijective)
