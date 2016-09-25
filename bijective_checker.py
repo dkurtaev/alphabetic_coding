@@ -25,11 +25,10 @@ from coding_tree import CodingTree
 
 class BijectiveChecker(object):
 
-    def __init__(self, coding_table):
-        self.coding_table = coding_table
-        self.codes = [code for code in coding_table.values()]
+    def __init__(self, codes):
+        self.codes = codes
         self.coding_tree = CodingTree()
-        for code in coding_table.values():
+        for code in codes:
             self.coding_tree.add_node(code, code)
 
     def check(self):
@@ -37,7 +36,7 @@ class BijectiveChecker(object):
         decompositions = []
         for code in self.codes:
             decompositions += self.get_decompositions(code, suprefixes)
-        print self.find_loop(suprefixes, decompositions)
+        return self.find_loop(suprefixes, decompositions) is None
 
     def extract_suprefixes(self):
         """Extracting set of suprefixes: binary sequences which are prefix and
@@ -83,8 +82,7 @@ class BijectiveChecker(object):
                 self.to = to
                 self.weight = ''.join(weight)
 
-        visiting = {s: False for s in suprefixes}
-        visiting[''] = True
+        visited = {s: False for s in suprefixes}
 
         edges = {s: [] for s in suprefixes}
         for d in decompositions:
@@ -101,11 +99,12 @@ class BijectiveChecker(object):
                 node = nodes_queue.popleft()
                 text = texts_queue.popleft()
                 for edge in edges[node]:
-                    nodes_queue.append(edge.to)
-                    if edge.to != '':
-                        texts_queue.append(text + edge.weight + edge.to)
-                        visiting[edge.to] = True
-                    else:
-                        return text + edge.weight
+                    if not visited[edge.to]:
+                        nodes_queue.append(edge.to)
+                        if edge.to != '':
+                            texts_queue.append(text + edge.weight + edge.to)
+                            visited[edge.to] = True
+                        else:
+                            return text + edge.weight
 
         return None
