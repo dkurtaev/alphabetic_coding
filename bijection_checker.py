@@ -23,7 +23,7 @@ from collections import deque
 
 from coding_tree import CodingTree
 
-class BijectiveChecker(object):
+class BijectionChecker(object):
 
     def __init__(self, codes):
         self.codes = codes

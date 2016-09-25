@@ -2,9 +2,9 @@ import unittest
 
 from code_generator import gen_code, max_num_characters, min_code_length, \
                            max_code_length
-from bijective_checker import BijectiveChecker
+from bijection_checker import BijectionChecker
 
-class TestBijectiveChecker(unittest.TestCase):
+class TestBijectionChecker(unittest.TestCase):
 
     def test_mcmillan_inequality(self):
         """Test that if coding is bijective then mcmillan inequality is true"""
@@ -17,7 +17,7 @@ class TestBijectiveChecker(unittest.TestCase):
                     for _ in range(25):
                         codes = gen_code(M, N, L)
                         codes = ['1', '0', '11']
-                        checker = BijectiveChecker(codes)
+                        checker = BijectionChecker(codes)
                         if checker.check():
                             terms = [pow(2, M - len(code)) for code in codes]
                             mcmillan_value = sum(terms)
