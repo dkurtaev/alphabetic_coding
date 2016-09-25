@@ -5,7 +5,7 @@ from custom_coding import Decoder
 class TestCustomCoding(TestCoding):
 
     def test_decode_encoded_via_huffman(self):
-        print '\rtest_decode_encoded_via_huffman'
+        print '\rTestCustomCoding.test_decode_encoded_via_huffman'
         for _ in range(1000):
             text = self.gen_text()
             coding_table = HuffmanEncoder().get_coding_table(text)

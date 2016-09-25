@@ -7,6 +7,7 @@ from binary_search_tree import BST
 class TestBST(unittest.TestCase):
 
     def test_fuzz(self):
+        print '\tTestBST.test_fuzz'
         np.random.seed(324)
         tree = BST()
         for i in range(1000):
@@ -16,6 +17,7 @@ class TestBST(unittest.TestCase):
                 tree.pop_min_key_node()
 
     def test_pop_min_key(self):
+        print '\tTestBST.test_pop_min_key'
         np.random.seed(324)
         tree = BST()
         values = np.random.randint(low=0, high=100, size=1000)
