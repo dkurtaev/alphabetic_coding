@@ -3,8 +3,11 @@ from huffman_coding import HuffmanEncoder, HuffmanDecoder
 
 class TestHuffmanCoding(TestCoding):
 
+    @classmethod
+    def setUpClass(self):
+        print '\nTestHuffmanCoding'
+
     def test_all_chars_used(self):
-        print '\rTestHuffmanCoding.test_all_chars_used'
         for _ in range(1000):
             text = self.gen_text()
             scheme = HuffmanEncoder().get_coding_table(text)
@@ -12,7 +15,6 @@ class TestHuffmanCoding(TestCoding):
                 self.assertIn(char, scheme)
 
     def test_codes_are_binary(self):
-        print '\rTestHuffmanCoding.test_codes_are_binary'
         for _ in range(1000):
             text = self.gen_text()
             scheme = HuffmanEncoder().get_coding_table(text)
@@ -20,7 +22,6 @@ class TestHuffmanCoding(TestCoding):
                 self.assertRegexpMatches(code, r'^[01]+$')
 
     def test_coding_are_prefix(self):
-        print '\rTestHuffmanCoding.test_coding_are_prefix'
         for _ in range(1000):
             text = self.gen_text()
             scheme = HuffmanEncoder().get_coding_table(text)
@@ -31,7 +32,6 @@ class TestHuffmanCoding(TestCoding):
                     self.assertFalse(codes[j].startswith(codes[i]))
 
     def test_decode_encoded(self):
-        print '\rTestHuffmanCoding.test_decode_encoded'
         for _ in range(1000):
             text = self.gen_text()
             coding_table = HuffmanEncoder().get_coding_table(text)

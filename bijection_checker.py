@@ -23,8 +23,8 @@ class BijectionChecker(object):
                 self.lower_word = lower_word
 
         states = deque([State(code, -1, [], [code]) for code in self.codes])
-        visited_pos = []
-        visited_neg = []
+        visited_pos = set([])
+        visited_neg = set([])
         while len(states) > 0:
             state = states.popleft()
             codes_above_deficit, codes_below_deficit = \
@@ -46,11 +46,11 @@ class BijectionChecker(object):
                 if next_state.sign == 1:
                     if next_state.deficit not in visited_pos:
                         deficit_is_visited = False
-                        visited_pos.append(next_state.deficit)
+                        visited_pos.add(next_state.deficit)
                 else:
                     if next_state.deficit not in visited_neg:
                         deficit_is_visited = False
-                        visited_neg.append(next_state.deficit)
+                        visited_neg.add(next_state.deficit)
 
                 if not deficit_is_visited:
                     if state.sign == 1:

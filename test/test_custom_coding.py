@@ -4,8 +4,11 @@ from custom_coding import Decoder
 
 class TestCustomCoding(TestCoding):
 
+    @classmethod
+    def setUpClass(self):
+        print '\nTestCustomCoding'
+
     def test_decode_encoded_via_huffman(self):
-        print '\rTestCustomCoding.test_decode_encoded_via_huffman'
         for _ in range(1000):
             text = self.gen_text()
             coding_table = HuffmanEncoder().get_coding_table(text)

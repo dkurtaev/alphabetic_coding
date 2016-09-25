@@ -5,8 +5,11 @@ from code_generator import gen_code, max_num_characters, min_code_length, \
 
 class TestCodeGenerator(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(self):
+        print '\nTestCodeGenerator'
+
     def test_gen_lengths(self):
-        print '\rTestCodeGenerator.test_gen_lengths'
         def test(M, N, L, codes):
             lengths = [len(code) for code in codes]
             self.assertEqual(max(lengths), M)
@@ -16,7 +19,6 @@ class TestCodeGenerator(unittest.TestCase):
         gen_loop(test)
 
     def test_codes_uniquness(self):
-        print '\rTestCodeGenerator.test_codes_uniquness'
         def test(M, N, L, codes):
             self.assertEqual(len(codes), len(set(codes)))
 
