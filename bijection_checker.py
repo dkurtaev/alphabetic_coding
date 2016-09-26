@@ -12,8 +12,8 @@ def check_bijection(codes):
     for code in codes:
         coding_tree.add_node(code, code)
 
-    states = deque([State(code, -1, [], [code]) for code in codes])
-    deficits_hashes = set([])
+    states = deque([State(code, [], [code]) for code in codes])
+    visited_deficits = set([])
     while len(states) > 0:
         state = states.popleft()
         codes_above_deficit, codes_below_deficit = \
@@ -23,9 +23,9 @@ def check_bijection(codes):
             next_state = state.compensate_deficit(code)
 
             if next_state.deficit != '':
-                if next_state.hash() not in deficits_hashes:
+                if next_state.deficit not in visited_deficits:
                     states.append(next_state)
-                    deficits_hashes.add(next_state.hash())
+                    visited_deficits.add(next_state.deficit)
             elif len(next_state.upper_word) > 1 or \
                  len(next_state.lower_word) > 1:
                 return False, next_state.upper_word, next_state.lower_word
@@ -35,28 +35,17 @@ def check_bijection(codes):
 
 class State(object):
 
-    def __init__(self, deficit, sign, upper_word, lower_word):
+    def __init__(self, deficit, upper_word, lower_word):
         self.deficit = deficit
-        self.sign = sign
         self.upper_word = upper_word
         self.lower_word = lower_word
 
     def compensate_deficit(self, sequence):
         if len(sequence) > len(self.deficit):
-            new_deficit = sequence[len(self.deficit):]
-            new_sign = -self.sign
+            return State(deficit=sequence[len(self.deficit):],
+                         upper_word=self.lower_word,
+                         lower_word=self.upper_word + [sequence])
         else:
-            new_deficit = self.deficit[len(sequence):]
-            new_sign = self.sign
-
-        if self.sign < 0:
-            return State(new_deficit, new_sign,
+            return State(deficit=self.deficit[len(sequence):],
                          upper_word=self.upper_word + [sequence],
                          lower_word=self.lower_word)
-        else:
-            return State(new_deficit, new_sign,
-                         upper_word=self.upper_word,
-                         lower_word=self.lower_word + [sequence])
-
-    def hash(self):
-        return self.sign * int('1' + self.deficit, 2)
