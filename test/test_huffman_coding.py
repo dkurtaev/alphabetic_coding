@@ -43,11 +43,16 @@ class TestHuffmanCoding(TestCoding):
             self.assertEqual(text, decoded_text)
 
     def test_entropy(self):
-        for gen in range(1000):
+        """Optimal coding cost estimation is H(P) <= C <= H(P) + Pmax + C,
+        where Pmax - maximal frequency, C ~ 0.086.
+        (1978) Robert G. Gallager, Variations on a Theme by Huffman.
+        """
+        for _ in range(1000):
             text = self.gen_text()
             coding_table = HuffmanEncoder().get_coding_table(text)
 
             counts = dict(Counter(text))
+            max_count = max(counts.values())
             cost = 0
             entropy = 0
             for char, code in coding_table.items():
@@ -56,4 +61,4 @@ class TestHuffmanCoding(TestCoding):
                 cost += len(code) * freq
 
             self.assertLessEqual(entropy, cost)
-            self.assertLessEqual(cost, entropy + 1)
+            self.assertLessEqual(cost, entropy + max_count / len(text) + 0.0861)
