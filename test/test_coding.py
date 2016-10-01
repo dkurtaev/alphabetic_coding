@@ -11,7 +11,7 @@ class TestCoding(unittest.TestCase):
         self.text_seed = whitespace + digits + letters + punctuation
 
     def gen_text(self):
-        length = random.randint(2, 25)
+        length = random.randint(2, 500)
         return ''.join(random.choice(self.text_seed) for j in range(length))
 
 if __name__ == '__main__':

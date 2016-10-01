@@ -1,32 +1,34 @@
+"""This module provides usage for coding source text using custom coding table.
+Additionally you can check coding bijection: absence of words pair A and B which
+has similar codes, f(A)=f(B), where f(*) - coding by considered coding table."""
 import re
 
 from coding_tree import CodingTree
+from bijection_checker import check_bijection
 
-class Encoder(object):
+def encode_custom(text, coding_table, debug=True):
+    """Encode source text into binary sequence using custom coding table."""
+    if debug:
+        codes = coding_table.values()
+        for code in codes:
+            assert re.search(r'^[01]+$', code) != None, \
+                'All codes must be binary'
 
-    def __init__(self, coding_table, debug=True):
-        self.coding_table = coding_table
-        if debug:
-            for code in coding_table.values():
-                assert re.search(r'^[01]+$', code) != None, \
-                    'All codes must be binary'
+        is_bijective, _, _ = check_bijection(codes)
+        assert is_bijective
 
-    def encode(self, text, debug=True):
-        """Encode source text into binary sequence using custom coding table."""
-        if debug:
-            assert all(char in self.coding_table for char in text), \
-                'All characters in text must be mapped to binary sequences'
-        return ''.join(self.coding_table[char] for char in text)
+        assert all(char in coding_table for char in text), \
+            'All characters in text must be mapped to binary sequences'
 
+        return ''.join(coding_table[char] for char in text)
 
-class Decoder(object):
+def decode_custom(sequence, coding_table):
+    """Decoding binary sequence to string of corresponding characters."""
+    coding_tree = CodingTree()
+    for char, code in coding_table.items():
+        coding_tree.add_node(code, char)
 
-    def decode(self, sequence, coding_table):
-        coding_tree = CodingTree()
-        for char, code in coding_table.items():
-            coding_tree.add_node(code, char)
-
-        decompositions = coding_tree.decompose(sequence)
-        assert len(decompositions) < 2, 'Coding is not bijective.'
-        assert len(decompositions) > 0, 'Wrong coding table.'
-        return ''.join(decompositions[0])
+    decompositions = coding_tree.decompose(sequence)
+    assert len(decompositions) < 2, 'Coding is not bijective.'
+    assert len(decompositions) > 0, 'Wrong coding table.'
+    return ''.join(decompositions[0])
