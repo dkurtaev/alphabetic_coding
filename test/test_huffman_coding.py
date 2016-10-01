@@ -2,7 +2,7 @@ from collections import Counter
 from math import log
 
 from test_coding import TestCoding
-from huffman_coding import HuffmanEncoder, HuffmanDecoder
+from huffman_coding import huffman_coding_table, encode_huffman, decode_huffman
 
 class TestHuffmanCoding(TestCoding):
 
@@ -13,22 +13,22 @@ class TestHuffmanCoding(TestCoding):
     def test_all_chars_used(self):
         for _ in range(1000):
             text = self.gen_text()
-            scheme = HuffmanEncoder().get_coding_table(text)
+            coding_table = huffman_coding_table(text)
             for char in text:
-                self.assertIn(char, scheme)
+                self.assertIn(char, coding_table)
 
     def test_codes_are_binary(self):
         for _ in range(1000):
             text = self.gen_text()
-            scheme = HuffmanEncoder().get_coding_table(text)
-            for code in scheme.values():
+            coding_table = huffman_coding_table(text)
+            for code in coding_table.values():
                 self.assertRegexpMatches(code, r'^[01]+$')
 
     def test_coding_are_prefix(self):
         for _ in range(1000):
             text = self.gen_text()
-            scheme = HuffmanEncoder().get_coding_table(text)
-            codes = scheme.values()
+            coding_table = huffman_coding_table(text)
+            codes = coding_table.values()
             for i in range(len(codes) - 1):
                 for j in range(i + 1, len(codes)):
                     self.assertFalse(codes[i].startswith(codes[j]))
@@ -37,9 +37,8 @@ class TestHuffmanCoding(TestCoding):
     def test_decode_encoded(self):
         for _ in range(1000):
             text = self.gen_text()
-            coding_table = HuffmanEncoder().get_coding_table(text)
-            encoded_text = HuffmanEncoder().encode(text)
-            decoded_text = HuffmanDecoder().decode(encoded_text, coding_table)
+            encoded_text, coding_table = encode_huffman(text)
+            decoded_text = decode_huffman(encoded_text, coding_table)
             self.assertEqual(text, decoded_text)
 
     def test_entropy(self):
@@ -49,7 +48,7 @@ class TestHuffmanCoding(TestCoding):
         """
         for _ in range(1000):
             text = self.gen_text()
-            coding_table = HuffmanEncoder().get_coding_table(text)
+            coding_table = huffman_coding_table(text)
 
             counts = dict(Counter(text))
             max_count = max(counts.values())
