@@ -1,7 +1,7 @@
 import unittest
 
-from code_generator import gen_code, max_num_characters, min_code_length, \
-                           max_code_length
+from alphabetic_coding.code_generator import gen_code, max_num_characters, \
+                                             min_code_length, max_code_length
 
 class TestCodeGenerator(unittest.TestCase):
 

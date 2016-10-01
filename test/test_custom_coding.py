@@ -1,6 +1,6 @@
 from test_coding import TestCoding
-from huffman_coding import HuffmanEncoder
-from custom_coding import Decoder
+from alphabetic_coding.huffman_coding import encode_huffman
+from alphabetic_coding.custom_coding import encode_custom, decode_custom
 
 class TestCustomCoding(TestCoding):
 
@@ -11,7 +11,13 @@ class TestCustomCoding(TestCoding):
     def test_decode_encoded_via_huffman(self):
         for _ in range(1000):
             text = self.gen_text()
-            coding_table = HuffmanEncoder().get_coding_table(text)
-            encoded_text = HuffmanEncoder().encode(text)
-            decoded_text = Decoder().decode(encoded_text, coding_table)
+            encoded_text, coding_table = encode_huffman(text)
+            decoded_text = decode_custom(encoded_text, coding_table)
             self.assertEqual(text, decoded_text)
+
+    def test_encoder(self):
+        for _ in range(1000):
+            text = self.gen_text()
+            encoded_text, coding_table = encode_huffman(text)
+            custom_encoded_text = encode_custom(text, coding_table)
+            self.assertEqual(custom_encoded_text, encoded_text)
