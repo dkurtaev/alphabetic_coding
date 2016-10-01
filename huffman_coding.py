@@ -1,3 +1,5 @@
+from collections import Counter
+
 from binary_search_tree import BST
 from coding_tree import CodingTree
 
@@ -13,7 +15,7 @@ class HuffmanEncoder(object):
 
     def get_coding_table(self, text):
         """Returns dictionary {'character': binary code}."""
-        counts_table = self.get_counts_table(text)
+        counts_table = dict(Counter(text))
         coding_table = {char: '' for char in counts_table}
 
         # Exceptional case.
@@ -37,15 +39,6 @@ class HuffmanEncoder(object):
                           content=nodes[0].content + nodes[1].content)
 
         return coding_table
-
-    def get_counts_table(self, text):
-        """Returns dictionary {'character': number of it in text}."""
-        counts_table = {}
-        for char in text:
-            counts_table[char] = counts_table.get(char, 0) + 1
-
-        return counts_table
-
 
 class HuffmanDecoder(object):
     """ Decoding binary sequence received with Huffman encoding."""

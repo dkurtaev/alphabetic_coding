@@ -90,6 +90,44 @@ def gen_lengths(M, N, L):
 
     return x
 
+def gen_unbijective_coding():
+    """Generates set of codes which not has bijection. For it generate random
+    binary sequence and split in two different ways. Extract subsequences
+    between delimeters as codes."""
+    seed_length = random.randint(2, 10)
+    seed = random.randint(0, pow(2, seed_length) - 1)
+    seed = bin(seed)[2:].rjust(seed_length, '0')
+
+    _range = xrange(1, seed_length)
+
+    def gen_delimeters():
+        delimeters = random.sample(_range, random.randint(0, len(_range)))
+        delimeters.append(0)  # Fictive delimeters
+        delimeters.append(seed_length)
+        return sorted(delimeters)
+
+    first_delimeters = gen_delimeters()
+    second_delimeters = gen_delimeters()
+
+    while first_delimeters == second_delimeters:
+        second_delimeters = gen_delimeters()
+
+    codes = []
+    for delimeters in [first_delimeters, second_delimeters]:
+        for i in range(len(delimeters) - 1):
+            code = seed[delimeters[i]:delimeters[i + 1]]
+            if code not in codes:
+                codes.append(code)
+
+    M = 5
+    N = 20
+    L = (max_code_length(M, N) + min_code_length(M, N)) / 2
+    aug_codes = gen_code(M, N, L)
+    for code in aug_codes:
+        if code not in codes:
+            codes.append(code)
+
+    return codes
 
 def min_code_length(M, N):
     """This function returns minimal code length for specific number of
