@@ -3,8 +3,8 @@ Additionally you can check coding bijection: absence of words pair A and B which
 has similar codes, f(A)=f(B), where f(*) - coding by considered coding table."""
 import re
 
-from coding_tree import CodingTree
-from bijection_checker import check_bijection
+from alphabetic_coding.coding_tree import CodingTree
+from alphabetic_coding.bijection_checker import check_bijection
 
 def encode_custom(text, coding_table, debug=True):
     """Encode source text into binary sequence using custom coding table."""

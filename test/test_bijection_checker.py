@@ -1,8 +1,8 @@
 from test_coding import TestCoding
 from test_code_generator import gen_loop
-from bijection_checker import check_bijection
-from huffman_coding import huffman_coding_table
-from code_generator import gen_unbijective_coding
+from alphabetic_coding.bijection_checker import check_bijection
+from alphabetic_coding.huffman_coding import huffman_coding_table
+from alphabetic_coding.code_generator import gen_unbijective_coding
 
 class TestBijectionChecker(TestCoding):
 

@@ -1,6 +1,6 @@
 from test_coding import TestCoding
-from huffman_coding import encode_huffman
-from custom_coding import encode_custom, decode_custom
+from alphabetic_coding.huffman_coding import encode_huffman
+from alphabetic_coding.custom_coding import encode_custom, decode_custom
 
 class TestCustomCoding(TestCoding):
 

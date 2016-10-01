@@ -3,8 +3,8 @@ of characters in source text: more frequent characters has more shorter codes.
 """
 from collections import Counter
 
-from binary_search_tree import BST
-from coding_tree import CodingTree
+from alphabetic_coding.binary_search_tree import BST
+from alphabetic_coding.coding_tree import CodingTree
 
 def encode_huffman(text):
     """Encoding source text into binary sequence."""

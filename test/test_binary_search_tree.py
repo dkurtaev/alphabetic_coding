@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from binary_search_tree import BST
+from alphabetic_coding.binary_search_tree import BST
 
 
 class TestBST(unittest.TestCase):

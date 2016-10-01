@@ -1,7 +1,7 @@
 """This module provides function for check coding bijection"""
 from collections import deque
 
-from coding_tree import CodingTree
+from alphabetic_coding.coding_tree import CodingTree
 
 
 def check_bijection(codes):

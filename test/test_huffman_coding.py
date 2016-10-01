@@ -2,7 +2,8 @@ from collections import Counter
 from math import log
 
 from test_coding import TestCoding
-from huffman_coding import huffman_coding_table, encode_huffman, decode_huffman
+from alphabetic_coding.huffman_coding import huffman_coding_table, \
+                                             encode_huffman, decode_huffman
 
 class TestHuffmanCoding(TestCoding):
 
