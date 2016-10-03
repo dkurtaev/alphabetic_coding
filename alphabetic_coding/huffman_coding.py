@@ -2,8 +2,8 @@
 of characters in source text: more frequent characters has more shorter codes.
 """
 from collections import Counter
+from heapq import heapify, heappush, heappop
 
-from alphabetic_coding.binary_search_tree import BST
 from alphabetic_coding.coding_tree import CodingTree
 
 def encode_huffman(text):
@@ -22,20 +22,19 @@ def huffman_coding_table(text):
         coding_table[coding_table.keys()[0]] = '0'
         return coding_table
 
-    tree = BST()
-    for char, count in counts_table.items():
-        tree.add_node(key=count, content=[char])
+    heap = [(count, [char]) for char, count in counts_table.items()]
+    heapify(heap)
 
     # Each iteration deletes one node.
     for _ in range(len(counts_table) - 1):
-        nodes = [tree.pop_min_key_node(), tree.pop_min_key_node()]
+        nodes = [heappop(heap), heappop(heap)]
 
         for i, node in enumerate(nodes):
-            for char in node.content:
+            for char in node[1]:
                 coding_table[char] = '%d%s' % (i, coding_table[char])
 
-        tree.add_node(key=nodes[0].key + nodes[1].key,
-                      content=nodes[0].content + nodes[1].content)
+        heappush(heap, (nodes[0][0] + nodes[1][0],   # Add counts.
+                        nodes[0][1] + nodes[1][1]))  # Merge characters.
 
     return coding_table
 
